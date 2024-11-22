@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web  # Nome do Deployment
+  labels:
+    app: web  # Label associada ao Deployment
+spec:
+  replicas: 1  # Apenas uma réplica inicial; o HPA ajustará dinamicamente
+  selector:
+    matchLabels:
+      app: web  # Deve corresponder às labels dos pods abaixo
+  template:
+    metadata:
+      labels:
+        app: web  # Label associada aos pods
+    spec:
+      containers:
+      - name: site-container  # Nome do contêiner
+        image: anderson0920/flask-library-app:latest  # Imagem do Docker
+        ports:
+        - containerPort: 5000  # Porta da aplicação Flask
+        resources:
+          requests:  # Mínimo garantido de recursos
+            cpu: "500m"
+            memory: "256Mi"
+          limits:  # Máximo permitido de recursos
+            cpu: "1"
+            memory: "512Mi"
