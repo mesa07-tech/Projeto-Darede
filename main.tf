@@ -10,8 +10,8 @@ terraform {
 provider "aws" {
   region = "us-east-1"  
 
-  shared_config_files      = ["C:/Users/47485187821/.aws/config"] 
-  shared_credentials_files = ["C:/Users/47485187821/.aws/credentials"]
+  shared_config_files      = var.shared_config_files
+  shared_credentials_files = var.shared_credentials_files
 
   default_tags {
   }
@@ -30,8 +30,8 @@ module "cluster-eks" {
   source            = "./modules/EKS"
   cluster_name      = "darede-eks"
   nodes_name        = "darede-nodes"
-  service_role_arn  = "arn:aws:iam::307946635677:role/eks-service-role"
-  instance_role_arn = "arn:aws:iam::307946635677:role/eks-instance-role"
+  service_role_arn  = var.service_role_arn
+  instance_role_arn = var.instance_role_arn
   vpc_id            = module.vpc.vpc_id
   public_subnets    = module.vpc.public_subnets
   private_subnets   = module.vpc.private_subnets
@@ -51,8 +51,8 @@ module "rds" {
   allocated_storage = 20  
   db_engine = "mysql"
   db_instance_class = "db.t3.micro"
-  db_username = "admin"
-  db_password = "Senai.134"
+  db_username = var.db_username
+  db_password = var.db_password
   publicly_accessible = true
   subnet_ids = module.vpc.private_subnets
 }
