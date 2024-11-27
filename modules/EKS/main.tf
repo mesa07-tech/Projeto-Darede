@@ -34,3 +34,6 @@ resource "aws_eks_node_group" "eks-node-group" {
   }
 }
 
+data "aws_eks_cluster_auth" "darede-cluster" {
+  name = aws_eks_cluster.darede-cluster.name
+}

@@ -13,3 +13,13 @@ output "cluster_arn" {
   value       = aws_eks_cluster.darede-cluster.arn
   
 }
+
+output "cluster_certificate_authority_data" {
+  description = "Certificado do cluster EKS"
+  value       = aws_eks_cluster.darede-cluster.certificate_authority.0.data  
+}
+
+output "cluster_token" {
+  description = "Token de autenticação para o cluster EKS"
+  value       = data.aws_eks_cluster_auth.darede-cluster.token
+}
