@@ -1,0 +1,47 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout do código
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Configurar o Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.6
+
+    # Inicializar e aplicar o Terraform
+    - name: Terraform Init and Apply
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        terraform init
+        terraform apply -auto-approve
+
+    # Configurar o Kubernetes com o Kubeconfig
+    - name: Setup kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        kubectl-version: '1.27'
+
+    - name: Apply kubeconfig
+      run: |
+        echo "${{ secrets.KUBECONFIG_JSON }}" > kubeconfig.json
+        export KUBECONFIG=kubeconfig.json
+
+    # Deploy no Kubernetes
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
