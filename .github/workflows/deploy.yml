@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: ProjetoDarede1
 
 on:
   push:
