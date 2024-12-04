@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: web  # Certifique-se de que o seletor está correto para os pods que você deseja expor
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP  # Isso cria automaticamente o Load Balancer na AWS
