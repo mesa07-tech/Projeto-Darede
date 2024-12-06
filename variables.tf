@@ -21,3 +21,16 @@ variable "db_username" {
 variable "db_password" {
   type = string
 }
+
+variable "certificate_arn" {
+  type = string
+}
+
+variable "config_path" {
+  type = string
+}
+
+variable "cluster_name" {
+  type = string
+  
+}

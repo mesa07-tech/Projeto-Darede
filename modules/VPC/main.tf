@@ -3,6 +3,8 @@ resource "aws_vpc" "darede_vpc" {
     enable_dns_hostnames = true
     tags = {
         Name = var.vpc_name
+        "kubernetes.io/role/elb" = 1
+        "kubernetes.io/cluster/eks-darede" = "shared"        
     }
 }
 
@@ -13,8 +15,8 @@ resource "aws_subnet" "public_subnets" {
     availability_zone = var.azs[count.index]
     map_public_ip_on_launch = true
     tags = {
-        Name = "kubernetes.io/role/elb"
-        value = 1
+        "kubernetes.io/role/elb" = 1
+        "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
 }
 
@@ -24,15 +26,15 @@ resource "aws_subnet" "private_subnets" {
     cidr_block = var.private_subnets[count.index]
     availability_zone = var.azs[count.index]
     tags = {
-        Name = "kubernetes.io/role/internal-elb"
-        value = 1
+        "kubernetes.io/role/internal-elb" = 1
+        "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
 
 resource "aws_internet_gateway" "darede_igw" {
     vpc_id = aws_vpc.darede_vpc.id
     tags = {
-        Name = "darede-igw"
+        Name = "darede-igw-edu"
     }
 }
 

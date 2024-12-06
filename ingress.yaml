@@ -6,8 +6,6 @@ metadata:
     kubernetes.io/ingress.class: "alb"
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:730335574147:certificate/6206b9f1-3541-43e4-a6b8-369473acb41c
-    alb.ingress.kubernetes.io/web-acl-id: arn:aws:wafv2:us-east-1:730335574147:regional/webacl/managed-rule-example/130ecad4-ff8d-4c44-912f-d62c72c2807e # ARN do Web ACL criado
 spec:
   rules:
     - http:
@@ -19,4 +17,3 @@ spec:
                 name: my-service
                 port:
                   number: 5000
-            
