@@ -31,7 +31,7 @@ resource "aws_eks_node_group" "eks-node-group" {
   subnet_ids      = var.public_subnets
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 2
     min_size     = 1
   }
@@ -40,12 +40,6 @@ resource "aws_eks_node_group" "eks-node-group" {
 resource "aws_eks_addon" "vpc-cni" {
   cluster_name = aws_eks_cluster.darede-cluster.name
   addon_name   = "vpc-cni"
-  addon_version = "v1.19.0" 
-}
-
-resource "aws_eks_addon" "coredns" {
-  cluster_name = aws_eks_cluster.darede-cluster.name
-  addon_name   = "coredns"
 }
 
 resource "aws_eks_addon" "kube-proxy" {
@@ -53,10 +47,7 @@ resource "aws_eks_addon" "kube-proxy" {
   addon_name   = "kube-proxy"
 }
 
-resource "aws_eks_addon" "pod-identity-webhook" {
-  cluster_name = aws_eks_cluster.darede-cluster.name
-  addon_name   = "aws-pod-identity-webhook"
-}
+
 
 
 data "aws_eks_cluster_auth" "darede-cluster" {
