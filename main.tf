@@ -3,11 +3,14 @@ terraform {
     aws = {
       source  = "hashicorp/aws"
       version = "5.80.0"
+<<<<<<< HEAD
     }
 
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "2.34.0"
+=======
+>>>>>>> e9cd40fd21bb0dbaa8c2b89405ec66588e9b3448
     }
   }
 }
@@ -24,19 +27,13 @@ provider "aws" {
   }
 }
 
-provider "kubernetes" {
-  host                   = module.cluster-eks.cluster_endpoint
-  token                  = module.cluster-eks.cluster_token
-  cluster_ca_certificate = base64decode(module.cluster-eks.cluster_certificate_authority_data)
-
-}
 
 
 #================VPC================
 
 module "vpc" {
   source          = "./modules/VPC"
-  vpc_name        = "darede-vpc"
+  vpc_name        = "darede-vpc-edu"
   vpc_cidr        = "172.16.0.0/16"
   azs             = ["us-east-1a", "us-east-1b"]
   public_subnets  = ["172.16.1.0/24", "172.16.2.0/24"]
@@ -49,7 +46,11 @@ module "vpc" {
 module "cluster-eks" {
   source            = "./modules/EKS"
   cluster_name      = var.cluster_name
+<<<<<<< HEAD
   nodes_name        = "darede-nodes"
+=======
+  nodes_name        = "nodes-darede"
+>>>>>>> e9cd40fd21bb0dbaa8c2b89405ec66588e9b3448
   service_role_arn  = var.service_role_arn
   instance_role_arn = var.instance_role_arn
   vpc_id            = module.vpc.vpc_id
@@ -64,7 +65,8 @@ module "waf" {
   source       = "./modules/WAF"
   waf_name     = "darede-waf"
   waf_scope    = "REGIONAL"
-  resource_arn = module.cluster-eks.cluster_arn
-
-  depends_on = [module.cluster-eks]
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> e9cd40fd21bb0dbaa8c2b89405ec66588e9b3448

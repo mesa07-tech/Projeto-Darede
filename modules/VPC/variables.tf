@@ -19,5 +19,9 @@ variable "private_subnets" {
 }
 
 variable "cluster_name" {
+<<<<<<< HEAD
     type = string 
+=======
+    type = string
+>>>>>>> e9cd40fd21bb0dbaa8c2b89405ec66588e9b3448
 }
