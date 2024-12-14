@@ -22,20 +22,7 @@ variable "db_password" {
   type = string
 }
 
-<<<<<<< HEAD
 variable "cluster_name" {
   type = string 
-=======
-variable "certificate_arn" {
-  type = string
-}
-
-variable "config_path" {
-  type = string
-}
-
-variable "cluster_name" {
-  type = string
->>>>>>> e9cd40fd21bb0dbaa8c2b89405ec66588e9b3448
   
 }
